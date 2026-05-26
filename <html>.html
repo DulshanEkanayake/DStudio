@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DStudio</title>
+    <style>
+        /* CSS Variables for Easy Customization */
+        :root {
+            --bg-base: #0a0a0a;
+            --bg-surface: #171717;
+            --text-primary: #ededed;
+            --text-secondary: #a3a3a3;
+            --accent: #00f2fe;
+            --accent-hover: #4facfe;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        header {
+            background-color: rgba(23, 23, 23, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #262626;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-base) 100%);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, var(--accent), var(--accent-hover));
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--bg-surface);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #262626;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            background-color: var(--bg-surface);
+            padding: 3rem;
+            border-radius: 15px;
+            border: 1px solid #262626;
+        }
+
+        .contact-info h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .details-list {
+            list-style: none;
+        }
+
+        .details-list li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .details-list strong {
+            color: var(--text-primary);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--bg-base);
+            border: 1px solid #262626;
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
+        }
+
+        .contact-form .btn {
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--bg-surface);
+            color: var(--text-secondary);
+            border-top: 1px solid #262626;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .nav-links {
+                display: none; /* Hide links on mobile for simplicity in this template */
+            }
+        }
+        /* Hero Section Countdown Styles */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem; /* Button එකයි countdown එකයි අතර ඉඩ */
+            z-index: 2;
+        }
+
+        .time-box {
+            background-color: rgba(23, 23, 23, 0.6); /* Background එකට blend වෙන්න transparent කරලා */
+            backdrop-filter: blur(5px);
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            min-width: 90px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+        }
+
+        .time-box p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">D<span>Studio</span></a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <h1>RΞSPΛWИ</h1>
+            <p>If You Control Your Mind, You Can Change Your Life.</p>
+            
+            <div class="countdown-container">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <p>Days</p>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <p>Hours</p>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <p>Minutes</p>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <p>Seconds</p>
+                </div>
+            </div>
+
+            <a href="#features" class="btn">Explore Features</a>
+        </section>
+
+        <section id="features" class="features">
+            <div class="card">
+                <h3>High Contrast</h3>
+                <p>Carefully selected shades of gray and neon accents ensure your content remains perfectly readable without blinding your users.</p>
+            </div>
+            <div class="card">
+                <h3>Fully Responsive</h3>
+                <p>Built with CSS Grid and Flexbox, this layout automatically adapts to look great on desktop, tablet, and mobile screens.</p>
+            </div>
+            <div class="card">
+                <h3>Easy Setup</h3>
+                <p>No bloated frameworks required. Just pure, semantic HTML5 and clean CSS3 using native variables for quick color changes.</p>
+            </div>
+        </section>
+        <section id="contact" class="contact">
+            <h2>Get In Touch</h2>
+            <div class="contact-container">
+                
+                <div class="contact-info">
+                    <h3>Contact Details</h3>
+                    <p>Reach out to us for collaborations or inquiries. We typically respond within 24 hours.</p>
+                    <ul class="details-list">
+                        <li><strong>Email:</strong> doekanayake113gmail.com</li>
+                        <li><strong>Phone:</strong> +94 761705985</li>
+                        <li><strong>Location:</strong> "Ekanayake", Medagettuwa Road, Addunkele waththa, Ahangama, Sri Lanka</li>
+                    </ul>
+                </div>
+
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DStudio. Crafted with code.</p>
+    </footer>
+    <script>
+        // 1. Set the date we're counting down to (Month Day, Year Hours:Minutes:Seconds)
+        const countDownDate = new Date("August 9, 2026 23:59:59").getTime();
+
+        // 2. Update the count down every 1 second
+        const x = setInterval(function() {
+
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            const distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Add a leading zero if the number is less than 10 (e.g., 09 instead of 9)
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            // 3. If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.querySelector(".countdown-container").innerHTML = "<h3 style='color: var(--accent); font-size: 2rem;'>WE ARE LIVE!</h3>";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
