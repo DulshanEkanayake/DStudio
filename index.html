@@ -24,7 +24,15 @@
         }
 
         body {
-            background-color: var(--bg-base);
+            /* 1. Background image එකක් දාන ආකාරය */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://t3.ftcdn.net/jpg/01/83/50/32/360_F_183503230_heDoLySnwt4W968RVTJOf7LFHbkZdCHA.jpg');
+            
+            /* 2. Image එක මුළු screen එකටම ගැලපෙන සේ සකස් කිරීම */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Scroll කරද්දී background එක එක තැනම තබා ගැනීමට */
+            
             color: var(--text-primary);
             line-height: 1.6;
         }
@@ -124,12 +132,35 @@
             gap: 2rem;
         }
 
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
         .card {
-            background-color: var(--bg-surface);
-            padding: 2.5rem;
             border-radius: 15px;
             border: 1px solid #262626;
-            transition: transform 0.3s ease;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            height: 250px; /* කාඩ් එකේ උස */
+        }
+
+        /* කාඩ් 3ටම අදාළ පසුබිම් පින්තූර (Background Images) */
+        .card-bg-1 { background-image: url('https://media.licdn.com/dms/image/v2/D5612AQGvXXjCBq-Etg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1688710312431?e=2147483647&v=beta&t=VcJ32B4UgNZ0IxGIqklVdjvATtNWVhZmW39gpn8Um0g'); }
+        .card-bg-2 { background-image: url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500'); }
+        .card-bg-3 { background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500'); }
+
+        /* පින්තූරය උඩින් කළු ලේයර් එකක් දමා අකුරු පැහැදිලිව පෙන්වීම */
+        .card-overlay {
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 40%, rgba(10, 10, 10, 0.4));
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* අකුරු කාඩ් එකේ යටටම කිරීමට */
+            box-sizing: border-box;
         }
 
         .card:hover {
@@ -139,9 +170,18 @@
 
         .card h3 {
             color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
         }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .card-link { 
+            text-decoration: none; color: inherit; 
+        }
+
         /* Contact Section */
         .contact {
             padding: 5rem 5%;
@@ -323,19 +363,33 @@
         </section>
 
         <section id="features" class="features">
-            <div class="card">
-                <h3>Web Development</h3>
-                <p>html css java</p>
+            <!-- 1 වෙනි කාඩ් එක -->
+            <a href="webdesign.html" class="card-link">
+                <div class="card card-bg-1">
+                    <div class="card-overlay">
+                        <h3>Web Development</h3>
+                        <p>Dulshan</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2 වෙනි කාඩ් එක -->
+            <div class="card card-bg-2">
+                <div class="card-overlay">
+                    <h3>Graphic Design</h3>
+                    <p>Osanda</p>
+                </div>
             </div>
-            <div class="card">
-                <h3>Graphic Design</h3>
-                <p>html css java.</p>
-            </div>
-            <div class="card">
-                <h3>Easy Setup</h3>
-                <p>html css java2.</p>
+
+            <!-- 3 වෙනි කාඩ් එක -->
+            <div class="card card-bg-3">
+                <div class="card-overlay">
+                    <h3>Animation</h3>
+                    <p>Ekanayake</p>
+                </div>
             </div>
         </section>
+
         <section id="contact" class="contact">
             <h2>Get In Touch</h2>
             <div class="contact-container">
