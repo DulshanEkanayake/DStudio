@@ -46,9 +46,8 @@
 
         /* Photo Gallery Grid */
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            column-count: 3; /* 👈 පේළි කීයක් පේන්න ඕනෙද (Desktop එකේදී) */
+            column-gap: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -60,6 +59,8 @@
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             transition: transform 0.3s ease;
+            margin-bottom: 1.5rem; /* පින්තූර අතර යටින් හිඩැසක් තැබීමට */
+            break-inside: avoid; /* පින්තූරය මැදින් කැඩී යාම වැළැක්වීමට */
         }
 
         .gallery-item:hover {
@@ -69,9 +70,16 @@
 
         .gallery-item img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: auto; /* 👈 මේකෙන් පින්තූරේ ඔරිජිනල් උස අනුව auto හැඩගැසෙනවා */
             display: block;
+            pointer-events: none;       /* පින්තූරය උඩ ක්ලික් කරන්න බැරි කරයි */
+            user-select: none;          /* පින්තූරය සිලෙක්ට් කරන්න බැරි කරයි */
+            -webkit-user-drag: none;    /* මවුස් එකෙන් ඇදගෙන යාම (drag) වළක්වයි */
+        }
+        @media (max-width: 768px) {
+            .gallery-grid {
+                column-count: 1;
+            }
         }
     </style>
 </head>
@@ -85,7 +93,13 @@
     <!-- පින්තූර එකතු කරන තැන -->
     <div class="gallery-grid">
         <div class="gallery-item">
-            <img src="https://drive.google.com/file/d/1547ASEDS8wzyn0ue-HnKHr5tbfvJDadv/view?usp=drive_link" alt="Work 1">
+            <img src="IMG-20251019-WA0004.jpg" alt="tashmika 1">
+        </div>
+        <div class="gallery-item">
+            <img src="IMG-20251008-WA0008.jpg" alt="tashmika 2">
+        </div>
+        <div class="gallery-item">
+            <img src="IMG-20250905-WA0002.jpg" alt="damiru 1">
         </div>
     </div>
 
