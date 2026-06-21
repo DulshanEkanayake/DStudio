@@ -410,11 +410,11 @@
                     </ul>
                 </div>
 
-                <form id="form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                <form id="form" class="contact-form">
                     <input type="hidden" name="access_key" value="c49068ee-bf58-43e1-9f8f-5a20cdc59487">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
                     <button type="submit" class="btn">Send Message</button>
                 </form>
 
