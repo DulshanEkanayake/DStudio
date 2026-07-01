@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>KCC</title>
+	<style>
+        /* CSS Variables for Easy Customization */
+        :root {
+            --bg-base: #ffffff;
+            --bg-surface: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --accent: #0056b3; /* සුදු පසුබිමට ගැලපෙන ලස්සන නිල් පාටක් */
+            --accent-hover: #003d80;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: var(--bg-base); /* පසුබිම සම්පූර්ණයෙන්ම සුදු කිරීමට */
+        }
+        .hero h1 {
+            font-size: 4rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, var(--accent), var(--accent-hover));
+            color: #fff; /* Button එක ඇතුළේ අකුරු සුදු පාට කිරීමට */
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2);
+        }
+</style>
+</head>
+<body>
+	<header>
+        <nav>
+            <a href="#" class="logo"><img src="School_Logo_new 1.png" alt="Kathaluwa Central College Logo" width="70" height="70">
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+	<main>
+		<section id="home" class="hero">
+            <h1>Kathaluwa Central College</h1>
+        </section>
+	</main>
+</body>
+</html>
