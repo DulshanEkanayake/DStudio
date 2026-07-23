@@ -339,7 +339,7 @@
 
 </head>
 <body>
-
+    <audio id="bgAudio" src="liyapalla.mp3"></audio>
     <header>
         <nav>
             <a href="#" class="logo">D<span>Studio</span></a>
@@ -506,6 +506,14 @@
             submitBtn.disabled = false;
         }
         });
+
+        // සයිට් එකේ ඕනෑම තැනක කරන පළමු ක්ලික් එකෙන් පමණක් සින්දුව ප්ලේ වේ
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgAudio");
+            audio.play().catch(function(error) {
+                console.log("Playback blocked.");
+            });
+        }, { once: true });
     </script>
 
 </body>
