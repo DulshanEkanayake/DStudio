@@ -95,10 +95,11 @@
         }
 
         .hero img {
-            max-width: 100%;
+            width: 100%;       /* ෆෝන් එකේදී screen එකේ ඉඩ ගන්න */
+            max-width: 850px;  /* හැබැයි ලැප්ටොප් එකේදී 850px වලට වඩා ලොකු වෙන්න එපා */
             height: auto;
             display: block;
-            margin: 0 auto 20px auto; /* මැදට ගන්න සහ පහළ ටෙක්ස්ට් එකට පොඩි ඉඩක් තියන්න */
+            margin: 0 auto;
         }
 
         .hero h1 {
@@ -288,10 +289,29 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
+            
             .nav-links {
                 display: none; /* Hide links on mobile for simplicity in this template */
             }
+
+            /* ෆෝන් එකේදී ඉමේජ් එක ලස්සනට සයිස් වෙන්න */
+            .hero img {
+                width: 100% !important;
+                max-width: 450px !important; /* ෆෝන් එකේ හැටියට ප්‍රමාණය මෙතනින් වෙනස් කරගන්න */
+                height: auto !important;
+            }
+
+            /* කොටු හතරම එක පේළියට ගන්න min-width එක පොඩ්ඩක් අඩු කරනවා */
+            .time-box {
+                min-width: 70px !important;
+                padding: 0.8rem 0.5rem !important; /* කොටුව ඇතුළේ ඉඩ පොඩ්ඩක් අඩු කරනවා */
+            }
+            
+            .time-box span {
+                font-size: 2rem !important; /* අකුරුත් පොඩ්ඩක් කුඩා කරනවා ලස්සනට ඉඩ යන්න */
+            }
         }
+        
         /* Hero Section Countdown Styles */
         .countdown-container {
             display: flex;
@@ -362,7 +382,7 @@
     <main>
         <section id="home" class="hero">
 
-            <img src="4u_Gemunu_x_transparent_2026-07-25.png" width="850" style="margin-bottom: -40px;">
+            <img src="4u_Gemunu_x_transparent_2026-07-25.png" style="margin-bottom: -40px;">
             
             <div class="countdown-container">
                 <div class="time-box">
