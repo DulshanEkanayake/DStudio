@@ -94,6 +94,13 @@
             background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-base) 100%);
         }
 
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto; /* මැදට ගන්න සහ පහළ ටෙක්ස්ට් එකට පොඩි ඉඩක් තියන්න */
+        }
+
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
@@ -339,6 +346,7 @@
 
 </head>
 <body>
+
     <audio id="bgAudio" src="liyapalla.mp3"></audio>
     <header>
         <nav>
@@ -353,8 +361,8 @@
 
     <main>
         <section id="home" class="hero">
-            <h1>RΞSPΛWИ</h1>
-            <p>If You Control Your Mind, You Can Change Your Life.</p>
+
+            <img src="4u_Gemunu_x_transparent_2026-07-25.png" width="650" style="margin-bottom: -40px;">
             
             <div class="countdown-container">
                 <div class="time-box">
@@ -506,14 +514,15 @@
             submitBtn.disabled = false;
         }
         });
-
+            
         // සයිට් එකේ ඕනෑම තැනක කරන පළමු ක්ලික් එකෙන් පමණක් සින්දුව ප්ලේ වේ
-        document.addEventListener('click', function() {
-            var audio = document.getElementById("bgAudio");
-            audio.play().catch(function(error) {
-                console.log("Playback blocked.");
-            });
-        }, { once: true });
+document.addEventListener('click', function() {
+    var audio = document.getElementById("bgAudio");
+    audio.play().catch(function(error) {
+        console.log("Playback blocked.");
+    });
+}, { once: true });
+
     </script>
 
 </body>
