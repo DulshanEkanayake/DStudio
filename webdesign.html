@@ -17,6 +17,7 @@
             color: var(--text-primary);
             font-family: 'Segoe UI', sans-serif;
             padding: 2rem 5%;
+            margin: 0;
         }
 
         .header-area {
@@ -44,12 +45,19 @@
 
         h1 span { color: var(--accent); }
 
-        /* Photo Gallery Grid */
+        /* 🛠️ Flexbox Column 3 Layout */
         .gallery-grid {
-            column-count: 3; /* 👈 පේළි කීයක් පේන්න ඕනෙද (Desktop එකේදී) */
-            column-gap: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .gallery-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .gallery-item {
@@ -59,8 +67,8 @@
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             transition: transform 0.3s ease;
-            margin-bottom: 1.5rem; /* පින්තූර අතර යටින් හිඩැසක් තැබීමට */
-            break-inside: avoid; /* පින්තූරය මැදින් කැඩී යාම වැළැක්වීමට */
+            position: relative;
+            width: 100%;
         }
 
         .gallery-item:hover {
@@ -68,18 +76,61 @@
             border-color: var(--accent);
         }
 
+        /* 🖼️ Normal Gallery එකේදී පින්තූර සහ වීඩියෝ */
         .gallery-item img {
             width: 100%;
-            height: auto; /* 👈 මේකෙන් පින්තූරේ ඔරිජිනල් උස අනුව auto හැඩගැසෙනවා */
+            height: auto;
             display: block;
-            pointer-events: none;       /* පින්තූරය උඩ ක්ලික් කරන්න බැරි කරයි */
-            user-select: none;          /* පින්තූරය සිලෙක්ට් කරන්න බැරි කරයි */
-            -webkit-user-drag: none;    /* මවුස් එකෙන් ඇදගෙන යාම (drag) වළක්වයි */
+            object-fit: cover;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
         }
+
+        .gallery-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover; /* Normal Grid එකේදී ලස්සනට කොටුවට Fit වෙන්න */
+        }
+
+        /* 📝 Video Caption */
+        .video-caption {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: sans-serif;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 2147483647;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        /* 📱 Responsive Mobile */
         @media (max-width: 768px) {
             .gallery-grid {
-                column-count: 1;
+                flex-direction: column;
             }
+        }
+
+        /* 🎯 Fullscreen ගියාම වීඩියෝ එක ඇදෙන්නේ/කැපෙන්නේ නැතුව මැදට ගන්න CSS */
+        #videoContainer:fullscreen {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            background-color: #000 !important;
+        }
+
+        #videoContainer:fullscreen video {
+            width: auto !important;
+            height: 100vh !important;
+            object-fit: contain !important;
         }
     </style>
 </head>
@@ -90,18 +141,79 @@
         <a href="index.html" class="back-btn">← Back to Home</a>
     </div>
 
-    <!-- පින්තූර එකතු කරන තැන -->
     <div class="gallery-grid">
-        <div class="gallery-item">
-            <img src="IMG-20251019-WA0004.jpg" alt="tashmika 1">
+        
+        <!-- 1 වෙනි Column එක -->
+        <div class="gallery-col">
+            <div id="videoContainer" class="gallery-item">
+                <video id="damiruVideo" class="gallery-img" autoplay loop muted playsinline controls style="cursor: pointer;">
+                    <source src="damiru.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3 class="video-caption">Happy Birthday Sithmi...</h3>
+            </div>
+            <div class="gallery-item">
+                <img src="IMG-20250905-WA0002.jpg" alt="damiru 1">
+            </div>
         </div>
-        <div class="gallery-item">
-            <img src="IMG-20251008-WA0008.jpg" alt="tashmika 2">
+
+        <!-- 2 වෙනි Column එක -->
+        <div class="gallery-col">
+            <div class="gallery-item">
+                <img src="IMG-20251019-WA0004.jpg" alt="tashmika 1">
+            </div>
         </div>
-        <div class="gallery-item">
-            <img src="IMG-20250905-WA0002.jpg" alt="damiru 1">
+
+        <!-- 3 වෙනි Column එක -->
+        <div class="gallery-col">
+            <div class="gallery-item">
+                <img src="IMG-20251008-WA0008.jpg" alt="tashmika 2">
+            </div>
         </div>
+        
     </div>
+
+    <script>
+        const video = document.getElementById('damiruVideo');
+        const container = document.getElementById('videoContainer'); 
+
+        video.addEventListener('click', function() {
+            const isFullscreen = document.fullscreenElement || 
+                                 document.webkitFullscreenElement || 
+                                 document.msFullscreenElement;
+
+            if (!isFullscreen) {
+                video.muted = false; 
+                video.controls = true; 
+                
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+                
+                video.play();
+            }
+        });
+
+        function handleFullscreenExit() {
+            const isFullscreen = document.fullscreenElement || 
+                                 document.webkitFullscreenElement || 
+                                 document.msFullscreenElement;
+            
+            if (!isFullscreen) {
+                video.muted = true;
+                video.controls = false; 
+            }
+        }
+
+        // 🛠️ මෙන්න මෙතන තිබ්බ spelling වැරැද්ද Fix කළා මචං
+        document.addEventListener('fullscreenchange', handleFullscreenExit);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenExit);
+        document.addEventListener('msfullscreenchange', handleFullscreenExit);
+    </script>
 
 </body>
 </html>
