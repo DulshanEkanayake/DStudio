@@ -278,38 +278,69 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1rem;
             background-color: var(--bg-surface);
             color: var(--text-secondary);
             border-top: 1px solid #262626;
         }
 
+        /* DStudio */
+        .footer-brand {
+            font-size: 1rem;          /* 16px */
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Description */
+        .footer-description {
+            font-size: 0.875rem;      /* 14px */
+            line-height: 1.7;
+            max-width: 550px;
+            margin: 0 auto 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Copyright & Powered by */
+        .footer-copy,
+        .footer-powered {
+            font-size: 0.75rem;       /* 12px */
+            color: #888;
+            margin: 0.25rem 0;
+        }
+
+        .footer-powered strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        .hero h1 {
+            font-size: 2.5rem;
+        }
             
-            .nav-links {
-                display: none; /* Hide links on mobile for simplicity in this template */
-            }
+        .nav-links {
+            display: none; /* Hide links on mobile for simplicity in this template */
+        }
 
-            /* ෆෝන් එකේදී ඉමේජ් එක ලස්සනට සයිස් වෙන්න */
-            .hero img {
-                width: 100% !important;
-                max-width: 450px !important; /* ෆෝන් එකේ හැටියට ප්‍රමාණය මෙතනින් වෙනස් කරගන්න */
-                height: auto !important;
-            }
+        /* ෆෝන් එකේදී ඉමේජ් එක ලස්සනට සයිස් වෙන්න */
+        .hero img {
+            width: 100% !important;
+            max-width: 450px !important; /* ෆෝන් එකේ හැටියට ප්‍රමාණය මෙතනින් වෙනස් කරගන්න */
+            height: auto !important;
+        }
 
-            /* කොටු හතරම එක පේළියට ගන්න min-width එක පොඩ්ඩක් අඩු කරනවා */
-            .time-box {
-                min-width: 70px !important;
-                padding: 0.8rem 0.5rem !important; /* කොටුව ඇතුළේ ඉඩ පොඩ්ඩක් අඩු කරනවා */
-            }
-            
-            .time-box span {
-                font-size: 2rem !important; /* අකුරුත් පොඩ්ඩක් කුඩා කරනවා ලස්සනට ඉඩ යන්න */
-            }
+        /* කොටු හතරම එක පේළියට ගන්න min-width එක පොඩ්ඩක් අඩු කරනවා */
+        .time-box {
+            min-width: 70px !important;
+            padding: 0.8rem 0.5rem !important; /* කොටුව ඇතුළේ ඉඩ පොඩ්ඩක් අඩු කරනවා */
+        }
+        
+        .time-box span {
+            font-size: 2rem !important; /* අකුරුත් පොඩ්ඩක් කුඩා කරනවා ලස්සනට ඉඩ යන්න */
+        }
         }
         
         /* Hero Section Countdown Styles */
@@ -465,8 +496,22 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 DStudio.</p>
+        <p class="footer-brand">DStudio</p>
+
+        <p class="footer-description">
+            Designing modern digital experiences with creativity,
+            innovation, and precision.
+        </p>
+
+        <p class="footer-copy">
+            © 2026 DStudio. All Rights Reserved.
+        </p>
+
+        <p class="footer-powered">
+            Powered by <strong>Dulshan Osanda Ekanayake</strong>
+        </p>
     </footer>
+
     <script>
         // 1. Set the date we're counting down to (Month Day, Year Hours:Minutes:Seconds)
         const countDownDate = new Date("August 9, 2026 23:59:59").getTime();
