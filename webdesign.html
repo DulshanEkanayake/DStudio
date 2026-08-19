@@ -83,9 +83,6 @@
             height: auto;
             display: block;
             object-fit: cover;
-            pointer-events: none;
-            user-select: none;
-            -webkit-user-drag: none;
         }
 
         .gallery-item video {
@@ -138,40 +135,101 @@
 <body>
 
     <div class="header-area">
-        <h1>Project <span>Gallery</span></h1>
+        <h2>හුදෙක් විනෝදය සදහා පමණි.<span></span></h2>
         <a href="index.html" class="back-btn">← Back to Home</a>
     </div>
 
     <div class="gallery-grid">
-        
+
         <!-- 1 වෙනි Column එක -->
         <div class="gallery-col">
-            <div id="videoContainer" class="gallery-item">
-                <video id="damiruVideo" class="gallery-img" autoplay loop muted playsinline controls style="cursor: pointer;">
-                    <source src="damiru.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <h3 class="video-caption">Happy Birthday Sithmi...</h3>
-            </div>
+
             <div class="gallery-item">
-                <img src="IMG-20250905-WA0002.jpg" alt="damiru 1">
+                <img src="f/Screenshot%20from%202026-08-18%2023-48-15.png" alt="Image 1">
             </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20251019-WA0013.jpg" alt="Image 2">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20251019-WA0004.jpg" alt="Image 3">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG_20230929_163920635~2.jpg" alt="Image 4">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/Screenshot%202025-10-15%20101346.png" alt="Image 5">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20251008-WA0009.jpg" alt="Image 6">
+            </div>
+
         </div>
+
 
         <!-- 2 වෙනි Column එක -->
         <div class="gallery-col">
+
             <div class="gallery-item">
-                <img src="IMG-20251019-WA0004.jpg" alt="tashmika 1">
+                <img src="f/IMG-20251008-WA0008.jpg" alt="Image 7">
             </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20251007-WA0243.jpg" alt="Image 8">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20250905-WA0002.jpg" alt="Image 9">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20250828-WA0008.jpg" alt="Image 10">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/STK-20250726-WA0020.webp" alt="Image 11">
+            </div>
+
         </div>
+
 
         <!-- 3 වෙනි Column එක -->
         <div class="gallery-col">
+
             <div class="gallery-item">
-                <img src="IMG-20251008-WA0008.jpg" alt="tashmika 2">
+                <img src="f/IMG_20231230_084604842~3.jpg" alt="Image 13">
             </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG_20230929_163920635~3.jpg" alt="Image 14">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG_20230929_163941983.jpg" alt="Image 15">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20240223-WA0014.jpg" alt="Image 16">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20230320-WA0072.jpg" alt="Image 17">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20230127-WA0024.jpg" alt="Image 18">
+            </div>
+
+            <div class="gallery-item">
+                <img src="f/IMG-20250813-WA0001.jpg" alt="Image 12">
+            </div>
+
         </div>
-        
+
     </div>
 
     <script>
@@ -210,7 +268,6 @@
             }
         }
 
-        // 🛠️ මෙන්න මෙතන තිබ්බ spelling වැරැද්ද Fix කළා මචං
         document.addEventListener('fullscreenchange', handleFullscreenExit);
         document.addEventListener('webkitfullscreenchange', handleFullscreenExit);
         document.addEventListener('msfullscreenchange', handleFullscreenExit);
