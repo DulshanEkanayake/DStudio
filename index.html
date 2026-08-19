@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@200..800&display=swap" rel="stylesheet">
     <title>DStudio</title>
     <style>
 
@@ -94,6 +97,61 @@
             background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-base) 100%);
         }
 
+        /* Animated Aurora Background */
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero::before {
+            background: rgba(0, 242, 254, 0.12);
+            top: -200px;
+            left: -150px;
+            animation: auroraOne 12s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            background: rgba(79, 172, 254, 0.10);
+            bottom: -250px;
+            right: -150px;
+            animation: auroraTwo 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes auroraOne {
+            0% {
+                transform: translate(0, 0) scale(1);}
+            50% {
+                transform: translate(250px, 120px) scale(1.15);}
+            100% {
+                transform: translate(100px, 300px) scale(1);}
+        }
+
+        @keyframes auroraTwo {
+            0% {
+                transform: translate(0, 0) scale(1);}
+            50% {
+                transform: translate(-180px, -100px) scale(1.2);}
+            100% {
+                transform: translate(-50px, -250px) scale(1);}
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
         .hero img {
             width: 100%;       /* ෆෝන් එකේදී screen එකේ ඉඩ ගන්න */
             max-width: 850px;  /* හැබැයි ලැප්ටොප් එකේදී 850px වලට වඩා ලොකු වෙන්න එපා */
@@ -153,8 +211,11 @@
             overflow: hidden;
             background-size: cover;
             background-position: center;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            height: 250px; /* කාඩ් එකේ උස */
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+            height: 250px;
         }
 
         /* කාඩ් 3ටම අදාළ පසුබිම් පින්තූර (Background Images) */
@@ -176,6 +237,9 @@
         .card:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(120, 60, 255, 0.18);
         }
 
         .card h3 {
@@ -331,46 +395,6 @@
             max-width: 450px !important; /* ෆෝන් එකේ හැටියට ප්‍රමාණය මෙතනින් වෙනස් කරගන්න */
             height: auto !important;
         }
-
-        /* කොටු හතරම එක පේළියට ගන්න min-width එක පොඩ්ඩක් අඩු කරනවා */
-        .time-box {
-            min-width: 70px !important;
-            padding: 0.8rem 0.5rem !important; /* කොටුව ඇතුළේ ඉඩ පොඩ්ඩක් අඩු කරනවා */
-        }
-        
-        .time-box span {
-            font-size: 2rem !important; /* අකුරුත් පොඩ්ඩක් කුඩා කරනවා ලස්සනට ඉඩ යන්න */
-        }
-        }
-        
-        /* Hero Section Countdown Styles */
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 2.5rem; /* Button එකයි countdown එකයි අතර ඉඩ */
-            z-index: 2;
-        }
-
-        .time-box {
-            background-color: rgba(23, 23, 23, 0.6); /* Background එකට blend වෙන්න transparent කරලා */
-            backdrop-filter: blur(5px);
-            border: 1px solid #262626;
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
-            min-width: 90px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--accent);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
         }
 
         .time-box p {
@@ -383,6 +407,219 @@
         .hide-card {
             display: none !important;
         }
+
+        #changing-caption {
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+            min-height: 80px; /* Text එකේ දිග වෙනස් වෙද්දී යට තියෙන Countdown එක උඩ පල්ලෙහා යෑම වැලැක්වීමට */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 35px; /* ඔයාට ගැලපෙන Size එකක් දාන්න */
+            line-height: 1.6;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        /* Password Modal */
+
+        .password-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .password-box {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            background: rgba(23, 23, 23, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            border-radius: 20px;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(0, 242, 254, 0.12);
+            animation: passwordPopup 0.3s ease;
+        }
+
+        @keyframes passwordPopup {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .lock-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .password-box h2 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .password-box > p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-password {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .close-password:hover {
+            color: var(--accent);
+        }
+
+        .password-input {
+            display: flex;
+            margin-bottom: 0.8rem;
+            background: var(--bg-base);
+            border: 1px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .password-input:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.12);
+        }
+
+        .password-input input {
+            flex: 1;
+            padding: 0.9rem;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .password-input button {
+            padding: 0 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        #passwordError {
+            min-height: 20px;
+            color: #ff4d6d;
+            font-size: 0.85rem;
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(
+                45deg,
+                var(--accent),
+                var(--accent-hover)
+            );
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        .password-shake {
+            animation: passwordShake 0.35s ease;
+        }
+
+        @keyframes passwordShake {
+            0%, 100% {
+                transform: translateX(0);}
+            25% {
+                transform: translateX(-8px);}
+            75% {
+                transform: translateX(8px);}
+        }
+
+        .game-card {
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 242, 254, 0.18), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(79, 172, 254, 0.15), transparent 30%),
+                #101010;
+
+            border: 1px solid #262626;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .game-card-content {
+            padding: 2rem;
+        }
+
+        .game-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-card h3 {
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .game-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .play-text {
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+
     </style>
     
         <!-- Google tag (gtag.js) -->
@@ -413,33 +650,17 @@
     <main>
         <section id="home" class="hero">
 
-            <img src="4u_Gemunu_x_transparent_2026-07-25.png" style="margin-bottom: -40px;">
-            
-            <div class="countdown-container">
-                <div class="time-box">
-                    <span id="days">00</span>
-                    <p>Days</p>
-                </div>
-                <div class="time-box">
-                    <span id="hours">00</span>
-                    <p>Hours</p>
-                </div>
-                <div class="time-box">
-                    <span id="minutes">00</span>
-                    <p>Minutes</p>
-                </div>
-                <div class="time-box">
-                    <span id="seconds">00</span>
-                    <p>Seconds</p>
-                </div>
+            <div class="quote-container">
+                <p id="changing-caption"> Loading... </p>
             </div>
 
             <a href="#features" class="btn">Explore Features</a>
         </section>
 
         <section id="features" class="features">
+
             <!-- 1 වෙනි කාඩ් එක -->
-            <a href="webdesign.html" class="card-link">
+            <a href="webdesign.html" onclick="openProtectedCard(event, 'ubt mokatada', 'webdesign.html')"class="card-link">
                 <div class="card card-bg-1">
                     <div class="card-overlay">
                         <h3>Balanna Epa</h3>
@@ -467,6 +688,18 @@
                     </div>
                 </div>
             </a>
+
+            <!-- 4 වෙනි කාඩ් එක -->
+            <a href="game.html" class="card-link">
+                <div class="game-card">
+                    <div class="game-card-content">
+                        <span class="game-icon">🎮</span>
+                        <h3>DStudio Runner</h3>
+                        <p>Run, jump and beat your high score!</p>
+                        <span class="play-text">PLAY NOW →</span>
+                    </div>
+                </div>
+            </a>
         </section>
 
         <section id="contact" class="contact">
@@ -477,13 +710,11 @@
                     <!--<h3>Contact Details</h3>-->
                     <h3>Contact us</h3>
                     <p>Reach out to us for collaborations or inquiries. We typically respond within 24 hours.</p>
-                    <!--
-                    <ul class="details-list">
+                    <!--<ul class="details-list">
                         <li><strong>Email:</strong> doekanayake113@gmail.com</li>
                         <li><strong>Phone:</strong> +94 761705985</li>
                         <li><strong>Location:</strong> Ahangama, Sri Lanka</li>
-                    </ul>
-                    -->
+                    </ul>-->
                 </div>
 
                 <form id="form" class="contact-form">
@@ -497,6 +728,28 @@
             </div>
         </section>
     </main>
+
+    <div id="passwordModal" class="password-modal">
+        <div class="password-box">
+            <button class="close-password" onclick="closePassword()">×</button>
+            <div class="lock-icon">🔒</div>
+            <h2>Protected Content</h2>
+            <p>Enter the password to continue</p>
+            <div class="password-input">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Enter Password"
+                    autocomplete="off"
+                >
+                <button onclick="togglePassword()">👁</button>
+            </div>
+            <p id="passwordError"></p>
+            <button class="unlock-btn" onclick="checkPassword()">
+                Unlock
+            </button>
+        </div>
+    </div>
 
     <footer>
         <p class="footer-brand">DStudio</p>
@@ -516,36 +769,6 @@
     </footer>
 
     <script>
-        // 1. Set the date we're counting down to (Month Day, Year Hours:Minutes:Seconds)
-        const countDownDate = new Date("August 9, 2026 23:59:59").getTime();
-
-        // 2. Update the count down every 1 second
-        const x = setInterval(function() {
-
-            // Get today's date and time
-            const now = new Date().getTime();
-
-            // Find the distance between now and the count down date
-            const distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Add a leading zero if the number is less than 10 (e.g., 09 instead of 9)
-            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
-
-            // 3. If the count down is finished, write some text
-            if (distance < 0) {
-                clearInterval(x);
-                document.querySelector(".countdown-container").innerHTML = "<h3 style='color: var(--accent); font-size: 2rem;'>WE ARE LIVE!</h3>";
-            }
-        }, 1000);
 
         const form = document.getElementById('form');
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -584,12 +807,96 @@
         });
             
         // සයිට් එකේ ඕනෑම තැනක කරන පළමු ක්ලික් එකෙන් පමණක් සින්දුව ප්ලේ වේ
-document.addEventListener('click', function() {
-    var audio = document.getElementById("bgAudio");
-    audio.play().catch(function(error) {
-        console.log("Playback blocked.");
-    });
-}, { once: true });
+        document.addEventListener('click', function() {
+            var audio = document.getElementById("bgAudio");
+            audio.play().catch(function(error) {
+                console.log("Playback blocked.");
+            });
+        }, { once: true });
+
+
+        // 📝 ඔයාට මාරු වෙන්න ඕන Caption ටික මේ brackets ඇතුළට දාන්න
+        const captions = [
+            {
+                // මෙතන වටේට backticks (`) දාපු නිසා ඇතුළේ තියෙන double quotes ප්‍රශ්නයක් වෙන්නේ නැහැ
+                text: `“ උඹ මොනාද බොන්නෙ?<br>මොනවා බිව්වත්<br>උඹ මෙහෙ තියෙන්නෙ<br>ප්ලේන්ටි විතරයි. ”<br>Jහාන් Freනාන්දු`, 
+                font: `"Gemunu Libre", sans-serif` 
+            }
+        ];
+
+        let currentIndex = 0;
+        const captionElement = document.getElementById('changing-caption');
+
+        function changeCaption() {
+            // 1. මුලින්ම තියෙන එක Fade out කරනවා (හංගනවා)
+            captionElement.classList.add('fade-out');
+            
+            // 2. තත්පර 0.5කින් (Fade out වුණාට පස්සේ) Text එක සහ Font එක මාරු කරලා ආපහු පේන්න අරිනවා
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % captions.length;
+                
+                // 💡 .text කෑල්ල සහ .font කෑල්ල මෙතනදී වෙන වෙනම apply කරනවා
+                captionElement.innerHTML = captions[currentIndex].text;
+                captionElement.style.fontFamily = captions[currentIndex].font;
+                
+                captionElement.classList.remove('fade-out');
+            }, 500); 
+        }
+
+        // මුල්ම වතාවට page එක load වෙද්දී පළවෙනි caption එක සහ font එක දාන්න
+        captionElement.innerHTML = captions[0].text;
+        captionElement.style.fontFamily = captions[0].font;
+
+        // හැම තත්පර 5කට සැරයක්ම (5000ms) Caption එක ඔටෝ මාරු වෙන්න සෙට් කරනවා
+        setInterval(changeCaption, 60000);
+
+        
+        function openProtectedCard(event, correctPassword, targetPage) {
+            event.preventDefault();
+            document.getElementById("passwordModal").style.display = "flex";
+            document.getElementById("passwordInput").dataset.password = correctPassword;
+            document.getElementById("passwordInput").dataset.page = targetPage;
+            setTimeout(() => {
+                document.getElementById("passwordInput").focus();
+            }, 100);
+        }
+
+        function closePassword() {
+            document.getElementById("passwordModal").style.display = "none";
+            document.getElementById("passwordInput").value = "";
+            document.getElementById("passwordError").textContent = "";
+        }
+
+        function checkPassword() {
+            const input = document.getElementById("passwordInput");
+            const password = input.value;
+            const box = document.querySelector(".password-box");
+            const error = document.getElementById("passwordError");
+            if (password === input.dataset.password) {
+                window.location.href = input.dataset.page;
+            } else {
+                error.textContent = "Incorrect password. Try again.";
+                box.classList.remove("password-shake");
+                void box.offsetWidth;
+                box.classList.add("password-shake");
+            }
+        }
+
+        function togglePassword() {
+            const input = document.getElementById("passwordInput");
+            input.type =
+                input.type === "password"
+                ? "text"
+                : "password";
+        }
+        document.getElementById("passwordInput").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+            if (event.key === "Escape") {
+                closePassword();
+            }
+        });
 
     </script>
 

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DStudio Runner</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        background: #080808;
+        color: #ededed;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .game-wrapper {
+        width: min(1000px, 94vw);
+        text-align: center;
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding: 0 5px;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+
+    .logo span {
+        color: #00f2fe;
+    }
+
+    .score {
+        color: #a3a3a3;
+        font-size: 0.95rem;
+    }
+
+    .score strong {
+        color: #00f2fe;
+        font-size: 1.1rem;
+    }
+
+    #game {
+        width: 100%;
+        height: 500px;
+        display: block;
+        background:
+            radial-gradient(circle at 50% 25%, #171717 0%, #090909 65%);
+        border: 1px solid #262626;
+        border-radius: 18px;
+        box-shadow: 0 0 35px rgba(0, 242, 254, 0.08);
+        touch-action: manipulation;
+    }
+
+    .controls {
+        margin-top: 12px;
+        color: #777;
+        font-size: 0.85rem;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 9px 20px;
+        border: 1px solid #333;
+        border-radius: 20px;
+        color: #a3a3a3;
+        text-decoration: none;
+        transition: 0.25s ease;
+    }
+
+    .back-btn:hover {
+        color: #00f2fe;
+        border-color: #00f2fe;
+    }
+
+    @media (max-width: 600px) {
+        #game {
+            height: 420px;
+        }
+
+        .controls {
+            font-size: 0.75rem;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="game-wrapper">
+        <div class="top-bar">
+            <div class="logo">D<span>Studio</span> Runner</div>
+            <div class="score">
+                SCORE: <strong id="score">0</strong>
+                &nbsp; | &nbsp;
+                BEST: <strong id="best">0</strong>
+            </div>
+        </div>
+
+        <canvas id="game"></canvas>
+
+        <div class="controls">
+            SPACE / ↑ / TAP — JUMP
+        </div>
+
+        <a href="index.html" class="back-btn">← Back to DStudio</a>
+
+    </div>
+
+<script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    let W, H, groundY;
+    function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        W = canvas.width = rect.width * devicePixelRatio;
+        H = canvas.height = rect.height * devicePixelRatio;
+        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        W = rect.width;
+        H = rect.height;
+        groundY = H - 65;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    // =========================
+    // PLAYER
+    // =========================
+    const player = {
+        x: 90,
+        y: 0,
+        width: 34,
+        height: 45,
+        velocityY: 0,
+        gravity: 0.85,
+        jumpPower: -15,
+        grounded: false
+    };
+
+    // =========================
+    // GAME VARIABLES
+    // =========================
+    let obstacles = [];
+    let particles = [];
+    let score = 0;
+    let best = Number(localStorage.getItem("dstudioRunnerBest")) || 0;
+    let speed = 6;
+    let spawnTimer = 0;
+    let gameRunning = true;
+    let gameOver = false;
+    document.getElementById("best").textContent = best;
+
+    // =========================
+    // RESET
+    // =========================
+    function resetGame() {
+        player.y = groundY - player.height;
+        player.velocityY = 0;
+        obstacles = [];
+        particles = [];
+        score = 0;
+        speed = 6;
+        spawnTimer = 0;
+        gameOver = false;
+        gameRunning = true;
+        document.getElementById("score").textContent = "0";
+    }
+    resetGame();
+
+    // =========================
+    // JUMP
+    // =========================
+    function jump() {
+        if (gameOver) {
+            resetGame();
+            return;
+        }
+
+        if (player.grounded) {
+            player.velocityY = player.jumpPower;
+            player.grounded = false;
+            createParticles(
+                player.x + player.width / 2,
+                player.y + player.height
+            );
+        }
+    }
+
+    document.addEventListener("keydown", e => {
+        if (e.code === "Space" || e.code === "ArrowUp") {
+            e.preventDefault();
+            jump();
+        }
+    });
+    canvas.addEventListener("pointerdown", jump);
+
+    // =========================
+    // OBSTACLES
+    // =========================
+    function spawnObstacle() {
+        const height = 30 + Math.random() * 35;
+        const width = 22 + Math.random() * 18;
+        obstacles.push({
+            x: W + 30,
+            y: groundY - height,
+            width,
+            height
+        });
+    }
+
+    // =========================
+    // PARTICLES
+    // =========================
+    function createParticles(x, y) {
+        for (let i = 0; i < 8; i++) {
+            particles.push({
+                x,
+                y,
+                vx: (Math.random() - 0.5) * 3,
+                vy: Math.random() * -2,
+                life: 1
+            });
+
+        }
+    }
+
+    // =========================
+    // COLLISION
+    // =========================
+    function collision(a, b) {
+        return (
+            a.x < b.x + b.width &&
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y + a.height > b.y
+        );
+    }
+
+    // =========================
+    // UPDATE
+    // =========================
+    function update() {
+        if (!gameRunning) return;
+
+        // Player physics
+        player.velocityY += player.gravity;
+        player.y += player.velocityY;
+        if (player.y + player.height >= groundY) {
+            player.y = groundY - player.height;
+            player.velocityY = 0;
+            player.grounded = true;
+
+        }
+
+        // Spawn obstacles
+        spawnTimer--;
+        if (spawnTimer <= 0) {
+            spawnObstacle();
+            spawnTimer =
+                Math.max(55, 100 - speed * 4) +
+                Math.random() * 55;
+        }
+
+        // Move obstacles
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+            const obstacle = obstacles[i];
+            obstacle.x -= speed;
+            if (collision(player, obstacle)) {
+                endGame();
+            }
+
+            if (obstacle.x + obstacle.width < 0) {
+                obstacles.splice(i, 1);
+                score++;
+                speed += 0.08;
+                document.getElementById("score").textContent =
+                    score;
+            }
+        }
+
+        // Particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.08;
+            p.life -= 0.03;
+            if (p.life <= 0) {
+                particles.splice(i, 1);
+            }
+        }
+    }
+
+    // =========================
+    // GAME OVER
+    // =========================
+    function endGame() {
+        gameOver = true;
+        gameRunning = false;
+        if (score > best) {
+            best = score;
+            localStorage.setItem(
+                "dstudioRunnerBest",
+                best
+            );
+            document.getElementById("best").textContent =
+                best;
+        }
+    }
+
+    // =========================
+    // DRAW
+    // =========================
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        // Background glow
+        const gradient = ctx.createRadialGradient(
+            W / 2,
+            H / 3,
+            20,
+            W / 2,
+            H / 3,
+            W
+        );
+
+        gradient.addColorStop(0, "#171717");
+        gradient.addColorStop(1, "#080808");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, W, H);
+
+        // Stars
+        ctx.fillStyle = "rgba(255,255,255,0.35)";
+        for (let i = 0; i < 35; i++) {
+            const x = (i * 137) % W;
+            const y = (i * 71) % (groundY - 100);
+            ctx.fillRect(x, y, 1, 1);
+        }
+
+        // Ground
+        ctx.fillStyle = "#151515";
+        ctx.fillRect(0, groundY, W, H - groundY);
+        ctx.fillStyle = "#00f2fe";
+        ctx.fillRect(0, groundY, W, 2);
+
+        // Player glow
+        ctx.shadowColor = "#00f2fe";
+        ctx.shadowBlur = 18;
+        ctx.fillStyle = "#00f2fe";
+        ctx.fillRect(
+            player.x,
+            player.y,
+            player.width,
+            player.height
+        );
+        ctx.shadowBlur = 0;
+
+        // Player eye
+        ctx.fillStyle = "#080808";
+        ctx.fillRect(
+            player.x + 22,
+            player.y + 10,
+            5,
+            5
+        );
+
+        // Obstacles
+        obstacles.forEach(obstacle => {
+            ctx.shadowColor = "#4facfe";
+            ctx.shadowBlur = 12;
+            ctx.fillStyle = "#4facfe";
+            ctx.fillRect(
+                obstacle.x,
+                obstacle.y,
+                obstacle.width,
+                obstacle.height
+            );
+            ctx.shadowBlur = 0;
+        });
+
+        // Particles
+        particles.forEach(p => {
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = "#00f2fe";
+            ctx.fillRect(
+                p.x,
+                p.y,
+                4,
+                4
+            );
+        });
+        ctx.globalAlpha = 1;
+
+        // Game over
+        if (gameOver) {
+            ctx.fillStyle = "rgba(0,0,0,0.65)";
+            ctx.fillRect(0, 0, W, H);
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#ededed";
+            ctx.font = "bold 38px Segoe UI";
+            ctx.fillText(
+                "GAME OVER",
+                W / 2,
+                H / 2 - 20
+            );
+            ctx.fillStyle = "#00f2fe";
+            ctx.font = "18px Segoe UI";
+            ctx.fillText(
+                "Tap / Press SPACE to restart",
+                W / 2,
+                H / 2 + 25
+            );
+            ctx.textAlign = "left";
+        }
+    }
+
+    // =========================
+    // GAME LOOP
+    // =========================
+    function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+</script>
+
+</body>
+</html>
