@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>KCC</title>
-	<style>
-        /* CSS Variables for Easy Customization */
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KCC</title>
+
+    <style>
         :root {
             --bg-base: #ffffff;
             --bg-surface: #f8f9fa;
             --text-primary: #1a1a1a;
             --text-secondary: #555555;
-            --accent: #0056b3; /* සුදු පසුබිමට ගැලපෙන ලස්සන නිල් පාටක් */
+            --accent: #0056b3;
             --accent-hover: #003d80;
         }
 
-        /* Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -29,99 +33,585 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
+        /* ================= NAVIGATION ================= */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #e5e5e5;
+            z-index: 1000;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
+
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 5%;
+            padding: 0.5rem 5%;
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-primary);
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            letter-spacing: 1px;
         }
-        .logo span {
-            color: var(--accent);
+
+        .logo img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
         }
+
+        /* Desktop Menu */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
             margin-left: 2rem;
+            font-size: 1rem;
             transition: color 0.3s ease;
         }
+
         .nav-links a:hover {
             color: var(--accent);
         }
 
-        /* Hero Section */
+        /* Hamburger Button */
+
+        .menu-toggle {
+            display: none;
+            border: none;
+            background: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        /* ================= HERO ================= */
+
         .hero {
-            height: 100vh;
+            min-height: 100vh;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
-            background: var(--bg-base); /* පසුබිම සම්පූර්ණයෙන්ම සුදු කිරීමට */
+            padding: 100px 20px 40px;
+            overflow: hidden;
+            background: #ffffff;
         }
+
+        /* Background Image */
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: -15px;
+
+            background-image: url("kccimages/IMG_E1163.JPG");
+            background-size: cover;
+            background-position: center;
+
+            filter: blur(5px);
+            transform: scale(1.05);
+
+            z-index: 0;
+        }
+
+        /* White Overlay */
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background: rgba(255, 255, 255, 0.55);
+
+            z-index: 1;
+        }
+
+        /* Content above background */
+        .hero h1,
+        .hero p,
+        .hero .btn {
+            position: relative;
+            z-index: 2;
+        }
+
         .hero h1 {
             font-size: 4rem;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 1rem;
             line-height: 1.2;
         }
+
         .hero p {
             font-size: 1.2rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin-bottom: 2rem;
         }
+
         .btn {
             display: inline-block;
             padding: 1rem 2.5rem;
-            background: linear-gradient(45deg, var(--accent), var(--accent-hover));
-            color: #fff; /* Button එක ඇතුළේ අකුරු සුදු පාට කිරීමට */
+            background: linear-gradient(
+                45deg,
+                var(--accent),
+                var(--accent-hover)
+            );
+            color: #fff;
             text-decoration: none;
             font-weight: bold;
             border-radius: 30px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(0, 86, 179, 0.2);
         }
-</style>
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            nav {
+                padding: 0.4rem 5%;
+            }
+
+            .logo img {
+                width: 58px;
+                height: 58px;
+            }
+
+            /* Show hamburger */
+
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Hide menu initially */
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+
+                background: rgba(255, 255, 255, 0.65);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+
+                display: none;
+                flex-direction: column;
+                align-items: center;
+
+                padding: 1rem 0;
+
+                border-bottom: 1px solid #e5e5e5;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            /* Menu open */
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                margin: 0;
+                padding: 0.8rem 0;
+                width: 100%;
+                text-align: center;
+                font-size: 1rem;
+            }
+
+            .nav-links a:hover {
+                background-color: #f5f7fa;
+            }
+
+            /* Hero */
+
+            .hero {
+                padding: 100px 20px 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                max-width: 90%;
+            }
+
+            .btn {
+                padding: 0.85rem 2rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ================= SMALL PHONES ================= */
+
+        @media (max-width: 400px) {
+
+            .logo img {
+                width: 52px;
+                height: 52px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+            border-top: 1px solid #e5e5e5;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        footer span {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.75rem;
+        }
+
+        footer small {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.75rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .gallery-section {
+            padding: 80px 0;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .gallery-heading {
+            text-align: center;
+            margin-bottom: 35px;
+            padding: 0 20px;
+        }
+
+        .gallery-heading h2 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .gallery-heading p {
+            color: var(--text-secondary);
+        }
+
+        .gallery-slider {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .gallery-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+
+            animation: galleryScroll 40s linear infinite;
+        }
+
+        .gallery-card {
+            flex: 0 0 280px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Automatic scrolling */
+        @keyframes galleryScroll {
+
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            .gallery-section {
+                padding: 60px 0;
+            }
+
+            .gallery-heading h2 {
+                font-size: 2rem;
+            }
+
+            .gallery-card {
+                flex: 0 0 220px;
+                height: 160px;
+            }
+
+            .gallery-track {
+                gap: 12px;
+                animation-duration: 30s;
+            }
+        }
+
+        /* ================= CONTACT ================= */
+        .contact-section {
+            padding: 80px 5%;
+            background: var(--bg-surface);
+            text-align: center;
+        }
+        .contact-heading {
+            margin-bottom: 35px;
+        }
+        .contact-heading h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .contact-heading p {
+            color: var(--text-secondary);
+        }
+        .contact-content {
+            display: flex;
+            justify-content: center;
+        }
+        .contact-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            margin: 12px 0;
+            font-size: 0.95rem;
+        }
+
+        /* ================= MOBILE CONTACT ================= */
+        @media (max-width: 768px) {
+            .contact-section {
+                padding: 60px 15px;
+            }
+            .contact-heading h2 {
+                font-size: 2rem;
+            }
+            .contact-card {
+                padding: 25px 20px;
+            }
+        }
+
+    </style>
 </head>
+
 <body>
-	<header>
+
+    <!-- Navigation -->
+
+    <header>
         <nav>
-            <a href="#" class="logo"><img src="School_Logo_new 1.png" alt="Kathaluwa Central College Logo" width="70" height="70">
+            <a href="#home" class="logo">
+                <img src="School_Logo_new 1.png"
+                     alt="Kathaluwa Central College Logo">
             </a>
-            <div class="nav-links">
+
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open menu">
+                ☰
+            </button>
+
+            <div class="nav-links" id="navLinks">
+
                 <a href="#home">Home</a>
-                <a href="#features">Features</a>
+                <a href="#gallery">Gallery</a>
                 <a href="#contact">Contact</a>
+
             </div>
         </nav>
     </header>
-	<main>
-		<section id="home" class="hero">
+
+    <!-- Main -->
+    <main>
+        <section id="home" class="hero">
             <h1>Kathaluwa Central College</h1>
+            <p>Kathaluwa, Ahangama.</p>
         </section>
-	</main>
+
+        <section id="gallery" class="gallery-section">
+
+            <div class="gallery-heading">
+                <h2>School Gallery</h2>
+                <p>Memories and moments of Kathaluwa Central College</p>
+            </div>
+
+            <div class="gallery-slider">
+                <div class="gallery-track">
+
+                    <div class="gallery-card">
+                        <img src="kccimages/IMG-20250412-WA0029.jpg" alt="School Memory">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="kccimages/IMG_6317.JPG" alt="School Event">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="image3.jpg" alt="School Activity">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="image4.jpg" alt="School Function">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="image5.jpg" alt="School Life">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="image6.jpg" alt="Students">
+                    </div>
+
+                    <!-- Duplicate for smooth infinite scrolling -->
+
+                    <div class="gallery-card">
+                        <img src="image1.jpg" alt="School Memory">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="image2.jpg" alt="School Event">
+                    </div>
+
+                    <div class="gallery-card">
+                        <img src="image3.jpg" alt="School Activity">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section id="contact" class="contact-section">
+            <div class="contact-heading">
+                <h2>Contact Us</h2>
+                <p>Get in touch with Kathaluwa Central College</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-card">
+                    <h3>Kathaluwa Central College</h3>
+                    <p>
+                        📍 Vidyala Mawatha, Kathaluwa, Ahangama, Sri Lanka, 080650
+                    </p>
+                    <p>
+                        📞 +94 912 283 264
+                    </p>
+                    <p>
+                        ✉️ kathaluwacentralcollege@gmail.com
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Kathaluwa Central College</p>
+        <span>© 2026 All Rights Reserved.</span>
+
+        <small>
+            Designed &amp; Developed by
+            <a href="https://dulshanekanayake.github.io/DStudio/" target="_blank">
+                DStudio
+            </a>
+        </small>
+    </footer>
+
+    <!-- Mobile Menu JavaScript -->
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+        menuToggle.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+            if (navLinks.classList.contains("active")) {
+                menuToggle.textContent = "✕";
+            } else {
+                menuToggle.textContent = "☰";
+            }
+        });
+
+        // Close menu after clicking a link
+        document.querySelectorAll(".nav-links a").forEach(link => {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("active");
+                menuToggle.textContent = "☰";
+            });
+        });
+    </script>
 </body>
 </html>
